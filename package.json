@@ -1,0 +1,22 @@
+{
+  "name": "towerdefenceserver",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DavidSalmon/TowerDefenceServer.git"
+  },
+  "author": "David Salmon",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DavidSalmon/TowerDefenceServer/issues"
+  },
+  "homepage": "https://github.com/DavidSalmon/TowerDefenceServer#readme",
+  "dependencies": {
+    "express": "^4.15.2"
+  }
+}
