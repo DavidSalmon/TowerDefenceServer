@@ -31,6 +31,8 @@ app.use('/:id',function (req, res, next) {
             }
         }
         res.setHeader('Content-Type', 'text/json');
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 
         if(firstCaseMonster === null){
             res.json({error : 'first monster case not found in map'});
