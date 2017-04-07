@@ -16,17 +16,19 @@ router.route('/:id').get( (req,res)=>{
             return;
         }
         let respJSON = [[]];
-        let lines = data.split('\r\n');
+        let lines = data.replace(new RegExp('\r', 'g'),'').split('\n');
         let cases = [];
 
         let firstCaseMonster = null;
         for(let line of lines){
             cases.push([]);
             let currentline = cases.length -1;
+            let lineNumber = 0;
             for(character of line){
-                cases[currentline].push({type : character});
+                cases[currentline].push({type : character,x :lineNumber,y : currentline });
                 if(character === 'B')
-                    firstCaseMonster = {x: currentline, y : cases[currentline].length -1, type : 'Spawn'};
+                    firstCaseMonster = {y: currentline, x : cases[currentline].length -1, type : 'Spawn'};
+                lineNumber++;
             }
         }
         res.setHeader('Content-Type', 'text/json');
@@ -40,31 +42,33 @@ router.route('/:id').get( (req,res)=>{
             monsterPath.push(firstCaseMonster);
             let currentCase = firstCaseMonster;
             let previousCase = null;
-            while(currentCase !== null && currentCase.type !== 'End'){
+            let compteur = 0;
+            while(currentCase !== null && currentCase.type !== 'End' && compteur!==30){
+                compteur++;
                 if( currentCase.x !==0 && (previousCase === null ||!(previousCase.x===currentCase.x-1 && previousCase.y===currentCase.y))
                     &&  (cases[currentCase.x-1][currentCase.y].type === '-' || cases[currentCase.x-1][currentCase.y].type=== 'E')){
                     previousCase = currentCase;
-                    currentCase = {x: currentCase.x-1,y : currentCase.y};
+                    currentCase = {y: currentCase.x-1,x : currentCase.y};
                     currentCase.type = cases[currentCase.x][currentCase.y].type === 'E'?'End':'Path';
                     monsterPath.push(currentCase);
                 }else if( currentCase.x !==cases.length-1 && (previousCase === null ||!(previousCase.x===currentCase.x+1 && previousCase.y===currentCase.y))
                     &&  (cases[currentCase.x+1][currentCase.y].type === '-' || cases[currentCase.x+1][currentCase.y].type=== 'E')) {
                     previousCase = currentCase;
-                    currentCase = {x: currentCase.x + 1, y: currentCase.y};
+                    currentCase = {y: currentCase.x + 1, x: currentCase.y};
                     currentCase.type = cases[currentCase.x][currentCase.y].type === 'E' ? 'End' : 'Path';
                     monsterPath.push(currentCase);
                 }
                 else if( currentCase.y !==0 && (previousCase === null ||!(previousCase.x===currentCase.x && previousCase.y===currentCase.y-1))
                         &&  (cases[currentCase.x][currentCase.y-1].type === '-' || cases[currentCase.x][currentCase.y-1].type=== 'E')){
                     previousCase = currentCase;
-                    currentCase = {x: currentCase.x,y : currentCase.y-1};
+                    currentCase = {y: currentCase.x,x : currentCase.y-1};
                     currentCase.type = cases[currentCase.x][currentCase.y-1].type === 'E'?'End':'Path';
                     monsterPath.push(currentCase);
 
                 }else if( currentCase.y !== cases[0].length-1 && (previousCase === null ||!(previousCase.x===currentCase.x && previousCase.y===currentCase.y+1))
                         &&  (cases[currentCase.x][currentCase.y+1].type === '-' || cases[currentCase.x][currentCase.y+1].type=== 'E')){
                     previousCase = currentCase;
-                    currentCase = {x: currentCase.x,y : currentCase.y+1};
+                    currentCase = {y: currentCase.x,x : currentCase.y+1};
                     currentCase.type = cases[currentCase.x][currentCase.y+1].type === 'E'?'End':'Path';
                     monsterPath.push(currentCase);
                 }
