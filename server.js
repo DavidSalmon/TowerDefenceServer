@@ -10,9 +10,6 @@ const PORT = 8080;
 
 // App
 const app = express();
-/*app.get('/map/:id', function (req, res) {
-    res.sendFile('./maps/test.html',{root: __dirname});
-});*/
 
 app.use('/maps', require('./routes/get_maps'));
 
