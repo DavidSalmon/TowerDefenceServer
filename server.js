@@ -11,7 +11,7 @@ const PORT = 8080;
 // App
 const app = express();
 
-app.use('/maps', require('./routes/get_maps'));
+app.use('/maps', require('./routes/maps'));
 
 
 app.listen(PORT);
