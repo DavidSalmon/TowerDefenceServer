@@ -4,13 +4,16 @@
 const MapCase = require('../Entities/MapCase');
 
 
-const __BEGIN_CLASS = 'begin';
-const __END_CLASS = 'end';
-const __PATH_CLASS = 'path';
-const __STONE_CLASS = 'stone';
 
+const __BEGIN_CLASS = 'texture path-1';
+const __END_CLASS = 'texture path-1';
+const __PATH_CLASS = 'texture path-2';
+const __STONE_CLASS = 'texture grass-1';
 
-
+const __BEGIN_TYPE = 'begin';
+const __END_TYPE = 'end';
+const __PATH_TYPE = 'path';
+const __STONE_TYPE = 'stone';
 
 module.exports = {
   extractCasesFromFileData: function(data){
@@ -22,9 +25,9 @@ module.exports = {
       let currentline = cases.length -1;
       let lineNumber = 0;
       for(let character of line){
-        cases[currentline].push(new MapCase(lineNumber,currentline,getHTMLClassChar(character)));
+        cases[currentline].push(new MapCase(lineNumber,currentline,getCaseType(character),getHTMLClassChar(character)));
         if(character === 'B')
-        spawnCase = new MapCase(lineNumber,currentline,getHTMLClassChar(character));
+        spawnCase = new MapCase(lineNumber,currentline,getCaseType(character),getHTMLClassChar(character));
         lineNumber++;
       }
     }
@@ -86,4 +89,24 @@ function getHTMLClassChar(caseType){
     break;
   }
   return className;
+}
+
+
+function getCaseType(caseType){
+    let className = '';
+    switch(caseType){
+        case '0':
+            className = __STONE_TYPE;
+            break;
+        case '-':
+            className = __PATH_TYPE;
+            break;
+        case 'B':
+            className = __BEGIN_TYPE;
+            break;
+        case 'E':
+            className = __END_TYPE;
+            break;
+    }
+    return className;
 }

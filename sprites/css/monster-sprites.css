@@ -1,0 +1,19 @@
+.monster{
+	background: url("http://localhost:4201/sprites/images/monsters.png") no-repeat;
+  width: 68px;
+	height: 68px;
+	transform: rotate(180deg);
+	z-index: 100;
+}
+
+.monster-1{
+	background-position: 0 0;
+}
+
+.monster-2{
+	background-position: -68px 0;
+}
+
+.monster-3{
+	background-position: -136px 0;
+}
