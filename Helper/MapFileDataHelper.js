@@ -65,9 +65,15 @@ module.exports = {
 
 
 function checkNextCase(cases,currentCase,previousCase,x,y){
-  if((previousCase === null ||!(previousCase.y===y && previousCase.x===x))
-  &&(cases[y][x].type === 'path' || cases[y][x].type=== 'end'))
-  return new MapCase(x,y,cases[y][x].type);
+    try{
+        if((previousCase === null ||!(previousCase.y===y && previousCase.x===x))
+            &&(cases[y][x].type === 'path' || cases[y][x].type=== 'end'))
+            return new MapCase(x,y,cases[y][x].type);
+    }catch(e){
+        console.log('erreur')
+        return null;
+    }
+
   return null;
 }
 
