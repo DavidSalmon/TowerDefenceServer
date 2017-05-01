@@ -70,7 +70,7 @@ function checkNextCase(cases,currentCase,previousCase,x,y){
             &&(cases[y][x].type === 'path' || cases[y][x].type=== 'end'))
             return new MapCase(x,y,cases[y][x].type);
     }catch(e){
-        console.log('erreur')
+        console.log(e)
         return null;
     }
 
